@@ -9,7 +9,7 @@
 
         <link rel="stylesheet" href="/public/css/bootstrap.min.css">
 
-        <link rel="stylesheet" href="/public/css/abc.css">
+        <link rel="stylesheet" href="/public/css/abcde.css">
 
         <link rel="icon" href="/public/img/favicon.ico"/>
 
@@ -23,7 +23,7 @@
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5lRs-K-ynKO525aDEktx3uZI_8Oa2SQ8&callback=initMap" async defer></script>
 
-
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
     </head>
 

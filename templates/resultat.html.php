@@ -110,6 +110,31 @@ if ($_SESSION["id"]) {
       </div>
       <div class="modal-body">
 
+        <div class="modal_updating">
+          <p>
+            Ces informations étaient à jour le :
+            <?php
+            if ($row["up_to_date"] == '2014-01-01') {
+              $date = '<span style="color:lightgrey">2014-01-01</span>';
+            } else {
+              $date = html($row["up_to_date"]);
+            }
+            echo $date;
+            ?>
+          </p>
+          <div class="up-to-date">
+            <form action="src/modification_updating.php" method="post" id="up-to-date-form_<?php htmlout($row['code_uai']); ?>" name="up-to-date-form">
+              <input type="hidden" value="<?php htmlout($row['code_uai']); ?>" name="code_uai">
+              <input type="hidden" name="update">
+            </form>
+            <i class="fa fa-thumbs-up up-to-date-icon" onclick='{document.getElementById("up-to-date-form_<?php htmlout($row['code_uai']); ?>").submit()}'></i>
+            <p>
+              Je confirme que ces informations sont aujourd'hui à jour
+            </p>
+          </div>
+
+        </div>
+
           <div class="modal_infos">
           <p>Type d'établissement :<br><?php htmlout($row["type_etablissement"]); ?></p>
 
@@ -147,9 +172,6 @@ if ($_SESSION["id"]) {
 
           </div>
 
-
-          <br>
-
           <div class="modal_memo">
 
               <p>Informations complémentaires :<br>
@@ -157,7 +179,7 @@ if ($_SESSION["id"]) {
                 if (strlen($row["memo"]) > 0) {
                   $memo = html($row["memo"]);
                 } else {
-                  $memo = "<p style='color:lightgrey;text-align:center'>-</p>";
+                  $memo = "<p style='color:lightgrey'>-</p>";
                 }
                 echo $memo;
                 ?>
@@ -171,6 +193,8 @@ if ($_SESSION["id"]) {
                                 </form>
 
           </div>
+
+
 
       </div>
 

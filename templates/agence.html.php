@@ -14,17 +14,21 @@ if ($_SESSION["id"]) {
     <div class="row">
         <div class="col-lg-12" align="center">
 
+          <p class="agence_location">
+            <?php
+            echo 'Département : ' . $result[0]['departement'] . '<br>' . 'Région : ' . $result[0]['region'] . '<br>' . 'Académie : ' . $result[0]['academie'];
+            ?>
+          </p>
+
             <table class="table-striped agence_table">
 
 			    <thead>
 				    <tr>
                         <th class="text-center">Code UAI</th>
                         <th class="text-center">Nom</th>
-                        <th class="text-center commune_agence">Commune</th>
-                        <th class="text-center">Département</th>
-                        <th class="text-center">Région</th>
-                        <th class="text-center">Académie</th>
-                        <th class="text-center">Recettes annuelles</th>
+                        <th class="commune_agence">Commune</th>
+                        <th>Recettes annuelles</th>
+                        <th>Infos à jour le :</th>
                         <th></th>
 				    </tr>
 			    </thead>
@@ -91,6 +95,31 @@ if ($_SESSION["id"]) {
       </div>
       <div class="modal-body">
 
+        <div class="modal_updating">
+          <p>
+            Ces informations étaient à jour le :
+            <?php
+            if ($row["up_to_date"] == '2014-01-01') {
+              $date = '<span style="color:lightgrey">2014-01-01</span>';
+            } else {
+              $date = html($row["up_to_date"]);
+            }
+            echo $date;
+            ?>
+          </p>
+          <div class="up-to-date">
+            <form action="src/modification_updating.php" method="post" id="up-to-date-form_<?php htmlout($row['code_uai']); ?>" name="up-to-date-form">
+              <input type="hidden" value="<?php htmlout($row['code_uai']); ?>" name="code_uai">
+              <input type="hidden" name="update">
+            </form>
+            <i class="fa fa-thumbs-up up-to-date-icon" onclick='{document.getElementById("up-to-date-form_<?php htmlout($row['code_uai']); ?>").submit()}'></i>
+            <p>
+              Je confirme que ces informations sont aujourd'hui à jour
+            </p>
+          </div>
+
+        </div>
+
           <div class="modal_infos">
           <p>Type d'établissement :<br><?php htmlout($row["type_etablissement"]); ?></p>
 
@@ -128,9 +157,6 @@ if ($_SESSION["id"]) {
 
           </div>
 
-
-          <br>
-
           <div class="modal_memo">
 
               <p>Informations complémentaires :<br>
@@ -138,7 +164,7 @@ if ($_SESSION["id"]) {
                 if (strlen($row["memo"]) > 0) {
                   $memo = html($row["memo"]);
                 } else {
-                  $memo = "<p style='color:lightgrey;text-align:center'>-</p>";
+                  $memo = "<p style='color:lightgrey'>-</p>";
                 }
                 echo $memo;
                 ?>
@@ -152,6 +178,8 @@ if ($_SESSION["id"]) {
                                 </form>
 
           </div>
+
+
 
       </div>
 
@@ -184,48 +212,6 @@ if ($_SESSION["id"]) {
                         }
                         ?> >
 
-                        <?php if ($row["code_uai"] == $row["code_uai_agence_comptable"]) {
-                            echo '<p>' . htmlout($row["departement"]) . "</p>";
-                        } else {
-                            htmlout($row["departement"]);
-                        }
-                        ?>
-                        </td>
-
-                        <td <?php
-                        if ($row["code_uai"] == $row["code_uai_agence_comptable"]) {
-                            echo 'class="agence"';
-                        }
-                        ?> >
-
-                        <?php if ($row["code_uai"] == $row["code_uai_agence_comptable"]) {
-                            echo '<p>' . htmlout($row["region"]) . "</p>";
-                        } else {
-                            htmlout($row["region"]);
-                        }
-                        ?>
-                        </td>
-
-                        <td <?php
-                        if ($row["code_uai"] == $row["code_uai_agence_comptable"]) {
-                            echo 'class="agence"';
-                        }
-                        ?> >
-
-                        <?php if ($row["code_uai"] == $row["code_uai_agence_comptable"]) {
-                            echo '<p>' . htmlout($row["academie"]) . "</p>";
-                        } else {
-                            htmlout($row["academie"]);
-                        }
-                        ?>
-                        </td>
-
-                        <td <?php
-                        if ($row["code_uai"] == $row["code_uai_agence_comptable"]) {
-                            echo 'class="agence"';
-                        }
-                        ?> >
-
                         <?php
                         if (strlen($row["ca"]) > 0) {
                           $ca = html($row["ca"]);
@@ -238,6 +224,17 @@ if ($_SESSION["id"]) {
                             echo $ca;
                         }
                         ?>
+                        </td>
+
+                        <td>
+                          <?php
+                          if ($row["up_to_date"] == '2014-01-01') {
+                            $date = '<span style="color:lightgrey">2014-01-01</span>';
+                          } else {
+                            $date = html($row["up_to_date"]);
+                          }
+                          echo $date;
+                          ?>
                         </td>
 
                         <td <?php
